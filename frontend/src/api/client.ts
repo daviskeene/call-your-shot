@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000'; // TODO: replace w/ deployed URL
+const API_URL = "http://localhost:8000"; // TODO: replace w/ deployed URL
 
 export const apiClient = {
   get: async (endpoint: string) => {
@@ -10,9 +10,9 @@ export const apiClient = {
   },
   post: async (endpoint: string, data: any) => {
     const response = await fetch(`${API_URL}${endpoint}`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });

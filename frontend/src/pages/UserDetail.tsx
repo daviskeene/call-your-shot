@@ -1,10 +1,14 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useUserShotBalances } from '../api/hooks/useShotBalances';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useUserShotBalances } from "../api/hooks/useShotBalances";
 
 const UserDetail: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
-  const { data: shotBalances, isLoading, error } = useUserShotBalances(userId || '');
+  const {
+    data: shotBalances,
+    isLoading,
+    error,
+  } = useUserShotBalances(userId || "");
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading user data.</div>;

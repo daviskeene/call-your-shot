@@ -1,39 +1,53 @@
-import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '../client';
+import { useQuery } from "@tanstack/react-query";
+import { apiClient } from "../client";
 
 type GraphDataResponse = {
-    edges: {
-        id: number;
-        name: string;
-    }[];
-    nodes: {
-        from: number;
-        to: number;
-        value: number;
-    }[];
-    leaderboard: {
-        id: number;
-        name: string;
-        totalShotsOwed: number;
-        totalShotsOwedTo: number;
-    }[];
+  nodes: {
+    id: number;
+    name: string;
+  }[];
+  edges: {
+    from: number;
+    to: number;
+    value: number;
+    reason: string;
+    outcome: string | null;
+    dateCreated: string;
+  }[];
+  leaderboard: {
+    id: number;
+    name: string;
+    totalShotsOwed: number;
+    totalShotsOwedTo: number;
+  }[];
 };
 
-
 export const useShotBalances = () => {
-  return useQuery<GraphDataResponse>(['shotBalances'], () =>
-    apiClient.get('/data/graph'),
+  return useQuery<GraphDataResponse>(
+    ["shotBalances"],
+    () => apiClient.get("/data/graph"),
+    {
+      staleTime: 1000 * 60 * 5,
+    },
   );
 };
 
 export const useUserShotBalances = (userId: string) => {
-  return useQuery(['userShotBalances', userId], () =>
-    apiClient.get(`/users/${userId}/shot-balances`),
+  return useQuery(
+    ["userShotBalances", userId],
+    () => apiClient.get(`/users/${userId}/shot-balances`),
+    {
+      staleTime: 1000 * 60 * 5,
+    },
   );
 };
 
 export const useShotRelationships = () => {
-  return useQuery<GraphDataResponse>(['shotRelationships'], () =>
-    apiClient.get('/data/graph'),
+  return useQuery<GraphDataResponse>(
+    ["shotRelationships"],
+    () => apiClient.get("/data/graph"),
+    {
+      staleTime: 1000 * 60 * 5,
+    },
   );
 };

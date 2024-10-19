@@ -36,7 +36,10 @@ def get_shot_relationships_graph(db: Session):
         edges.append({
             "from": bet.bettor_id,
             "to": bet.bettee_id,
-            "value": bet.shots
+            "value": bet.shots,
+            "reason": bet.description,
+            "outcome": bet.outcome,
+            "dateCreated": bet.date_created
         })
 
         # Update shot counts for leaderboard

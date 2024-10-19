@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import ForceGraph2D from 'react-force-graph-2d';
+import React, { useEffect, useRef } from "react";
+import ForceGraph2D from "react-force-graph-2d";
 
 type GraphVisualizationProps = {
   query: any;
@@ -27,7 +27,7 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ query }) => {
 
   useEffect(() => {
     if (data && graphRef.current) {
-        // TODO: Implement graph rendering
+      // TODO: Implement graph rendering
     }
   }, [data]);
 
@@ -35,11 +35,14 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ query }) => {
   if (error) return <div>Error loading graph.</div>;
 
   return (
-    <div ref={graphRef} style={{
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
-        padding: '16px',
-    }}>
+    <div
+      ref={graphRef}
+      style={{
+        border: "1px solid #e5e7eb",
+        borderRadius: "8px",
+        padding: "16px",
+      }}
+    >
       <ForceGraph2D
         graphData={graphData}
         nodeLabel="name"

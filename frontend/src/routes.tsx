@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import Dashboard from './pages/Dashboard';
-import UserDetail from './pages/UserDetail';
-import CreateBet from './pages/CreateBet';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Dashboard from "./pages/Dashboard";
+import UserDetail from "./pages/UserDetail";
+import CreateBet from "./pages/CreateBet";
+import Leaderboard from "./pages/Leaderboard";
 
 const AppRoutes: React.FC = () => (
   <Router>
@@ -13,6 +14,7 @@ const AppRoutes: React.FC = () => (
         <Route path="/" element={<Dashboard />} />
         <Route path="/users/:userId" element={<UserDetail />} />
         <Route path="/create-bet" element={<CreateBet />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         {/* Add more routes as needed */}
       </Routes>
     </Layout>
