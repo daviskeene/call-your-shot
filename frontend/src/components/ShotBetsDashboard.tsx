@@ -132,7 +132,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
   }, [nodes, edges]);
 
   return (
-    <div className="min-h-screen p-1">
+    <div className="min-h-screen pt-4">
       <header className="bg-white text-left mb-8">
         <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
           Shot Bets Dashboard
