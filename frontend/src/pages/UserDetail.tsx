@@ -8,8 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Clock, Network, TrendingUp, Diamond } from "lucide-react";
-import { format, formatDistanceToNow } from "date-fns";
+import { Users, TrendingUp, Diamond } from "lucide-react";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import ShotBetsLoading from "@/components/ui/ShotBetLoading";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,11 +17,6 @@ import { useUserShotBalances } from "@/api/hooks/useShotBalances";
 import { Helmet } from "react-helmet";
 
 // Define types for user-specific data
-type User = {
-  id: number;
-  name: string;
-  email: string;
-};
 
 type Bet = {
   id: number;

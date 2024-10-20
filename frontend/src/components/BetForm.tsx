@@ -1,7 +1,7 @@
 import React from "react";
 import { useUsers } from "../api/hooks/useUsers";
 import { useCreateBet } from "../api/hooks/useBets";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";

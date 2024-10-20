@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -11,7 +11,6 @@ import {
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   return (
     <>

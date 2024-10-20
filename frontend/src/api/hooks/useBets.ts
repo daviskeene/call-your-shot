@@ -29,7 +29,7 @@ export const useCallShot = (betId: number) => {
 
         return { previousBet };
       },
-      onError: (err, _, context) => {
+      onError: (_err, _, context) => {
         queryClient.setQueryData(["bets", betId], context?.previousBet);
       },
       onSettled: () => {
@@ -56,7 +56,7 @@ export const useCreateBet = () => {
 
         return { previousBets };
       },
-      onError: (err, newBet, context) => {
+      onError: (_err, _newBet, context) => {
         queryClient.setQueryData(["bets"], context?.previousBets);
       },
       onSettled: () => {
