@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000"; // TODO: replace w/ deployed URL
+const API_URL = import.meta.env.VITE_API_URL as string;
 
 export const apiClient = {
   get: async (endpoint: string) => {
