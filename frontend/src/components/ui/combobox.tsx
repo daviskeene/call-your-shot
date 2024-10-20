@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +15,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiClient } from "../../api/client";
+import { User } from "@/types/user";
 
 type Option = {
   value: string;
@@ -24,52 +26,78 @@ type Option = {
 
 type ComboboxProps = {
   options: Option[];
-  placeholder?: string; // Placeholder text
-  noMatchText?: string; // Text to display when no matches are found
-  value?: string; // Controlled value
-  onChange?: (value: string) => void; // Callback when value changes
+  placeholder?: string;
+  noMatchText?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 };
 
 export const Combobox: React.FC<ComboboxProps> = ({
   options,
   placeholder = "Select or type...",
   noMatchText = "No match found.",
-  value = "",
+  value,
   onChange,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [inputValue, setInputValue] = React.useState("");
-  const [value_, setValue] = React.useState(value);
+  const [internalValue, setInternalValue] = React.useState(value || "");
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const queryClient = useQueryClient();
 
-  // Synchronize inputValue with the value prop
-  useEffect(() => {
-    const selectedOption = options.find((option) => option.value === value);
-    if (selectedOption) {
-      setInputValue(selectedOption.label);
-    } else {
-      setInputValue(value);
+  const createUserMutation = useMutation(
+    (newUser: { name: string; email: string }) =>
+      apiClient.post("/users/", newUser),
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData<User[]>(["users"], (oldData) => [
+          ...(oldData || []),
+          { id: data.id, name: data.name, email: data.email },
+        ]);
+        handleSelect(data.id);
+      },
+    },
+  );
+
+  React.useEffect(() => {
+    if (value !== undefined) {
+      setInternalValue(value);
     }
-  }, [value, options]);
+  }, [value]);
 
-  const handleSelect = (option: Option) => {
-    setInputValue(option.label);
-    setValue(option.value);
-    onChange?.(option.value); // Update parent with the selected value
+  const handleSelect = (currentValue: string) => {
+    const newValue = currentValue === internalValue ? "" : currentValue;
+    setInternalValue(newValue);
+    onChange && onChange(newValue);
     setOpen(false);
   };
 
-  const handleInputChange = (input: string) => {
-    setInputValue(input);
-    onChange?.(input); // Update parent with the new input
-    if (!open) setOpen(true); // Open the Popover when typing
+  const handleCreateUser = () => {
+    createUserMutation.mutate({
+      name: searchQuery,
+      email: `${searchQuery.toLowerCase().replace(/\s+/g, ".")}@example.com`,
+    });
   };
 
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(inputValue.toLowerCase()),
-  );
+  const filteredOptions = searchQuery
+    ? options?.filter((option) =>
+        option.label.toLowerCase().includes(searchQuery.toLowerCase()),
+      )
+    : options;
+
+  const showCreateOption =
+    searchQuery &&
+    !filteredOptions.some(
+      (option) => option.label.toLowerCase() === searchQuery.toLowerCase(),
+    );
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={open}
+      onOpenChange={(value) => {
+        setOpen(value);
+        setSearchQuery("");
+      }}
+    >
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -77,35 +105,47 @@ export const Combobox: React.FC<ComboboxProps> = ({
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {inputValue || placeholder}
+          {internalValue
+            ? options.find((op) => op.value === internalValue)?.label ||
+              searchQuery
+            : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
-        <Command>
+        <Command shouldFilter={false}>
           <CommandInput
             placeholder={placeholder}
-            value={inputValue}
-            onValueChange={(currentValue) => handleInputChange(currentValue)} // Use onChange instead of onValueChange
-            autoFocus // Auto-focus the input when Popover opens
+            onValueChange={setSearchQuery}
           />
           <CommandList>
+            <CommandEmpty>{noMatchText}</CommandEmpty>
             <CommandGroup>
-              {filteredOptions.map((option) => (
+              {filteredOptions.map((op) => (
                 <CommandItem
-                  key={option.label}
-                  value={option.value}
-                  onSelect={() => handleSelect(option)}
+                  key={op.value}
+                  value={op.value}
+                  onSelect={handleSelect}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === option.value ? "opacity-100" : "opacity-0",
+                      internalValue === op.value ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {option.label}
+                  {op.label}
                 </CommandItem>
               ))}
+              {showCreateOption && (
+                <CommandItem
+                  key="create-new-user"
+                  value={searchQuery}
+                  onSelect={handleCreateUser}
+                >
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Create new user "{searchQuery}"
+                </CommandItem>
+              )}
             </CommandGroup>
           </CommandList>
         </Command>

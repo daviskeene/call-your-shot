@@ -6,4 +6,6 @@ export interface Bet {
   description?: string;
   date_created?: string;
   outcome?: string;
+  bettor_name?: string;
+  bettee_name?: string;
 }

@@ -19,34 +19,25 @@ const Header: React.FC = () => {
         <Link to="/" className="mr-4 flex items-center">
           <span className="font-bold">Call Your Shot</span>
         </Link>
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link to="/leaderboard" className={navigationMenuTriggerStyle()}>
-                <NavigationMenuLink
-                  active={location.pathname === "/leaderboard"}
-                >
-                  Leaderboard
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link to="/search" className={navigationMenuTriggerStyle()}>
-                <NavigationMenuLink active={location.pathname === "/search"}>
-                  Search
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
       </div>
-      <Button
-        variant="outline"
-        aria-label="New Shot Bet"
-        onClick={() => navigate("/create-bet")}
-      >
-        New Shot Bet
-      </Button>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link to="/leaderboard" className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink active={location.pathname === "/leaderboard"}>
+                Leaderboard
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link to="/search" className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink active={location.pathname === "/search"}>
+                Search
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
     </>
   );
 };

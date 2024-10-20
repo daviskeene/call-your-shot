@@ -10,6 +10,9 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Clock, Network, TrendingUp, Diamond } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
+import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
+import ShotBetsLoading from "./ui/ShotBetLoading";
 
 type Node = {
   id: number;
@@ -23,6 +26,7 @@ type Edge = {
   reason: string;
   outcome: string | null;
   dateCreated: string;
+  id: number;
 };
 
 type LeaderboardEntry = {
@@ -51,14 +55,14 @@ const StatCard: React.FC<{
   trend: string;
 }> = ({ title, value, subValue, icon, trend }) => (
   <Card className="overflow-hidden shadow-xl transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1">
-    <CardHeader className="bg-white p-6">
+    <CardHeader className="bg-white p-4">
       <CardTitle className="text-lg font-semibold text-gray-800 flex items-center justify-between">
         <span>{title}</span>
         {icon}
       </CardTitle>
     </CardHeader>
     <CardContent className="bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <p className="text-3xl font-extrabold text-gray-900 mb-2">{value}</p>
+      <p className="text-2xl font-extrabold text-gray-900 mb-2">{value}</p>
       <p className="text-sm text-gray-600 mb-4">{subValue}</p>
       <div className="text-xs font-medium text-gray-500 flex items-center">
         <TrendingUp className="h-4 w-4 mr-1 text-green-500" />
@@ -69,10 +73,12 @@ const StatCard: React.FC<{
 );
 
 const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
+  const navigate = useNavigate();
+
   if (!data) {
     return (
       <div className="flex justify-center items-center h-screen">
-        Loading...
+        <ShotBetsLoading />
       </div>
     );
   }
@@ -109,8 +115,6 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
     );
   }, [edges]);
 
-  console.log(oldestShot);
-
   const totalShots = useMemo(() => {
     return edges.reduce((sum, edge) => sum + edge.value, 0);
   }, [edges]);
@@ -134,15 +138,24 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
   return (
     <div className="min-h-screen pt-4">
       <header className="bg-white text-left mb-8">
-        <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
-          Shot Bets Dashboard
-        </h1>
+        <div className="w-100 flex justify-between items-center">
+          <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
+            Shot Bets Dashboard
+          </h1>
+          <Button
+            variant="outline"
+            aria-label="New Shot Bet"
+            onClick={() => navigate("/create-bet")}
+          >
+            New Shot Bet
+          </Button>
+        </div>
         <p className="text-xl text-gray-600">
           Tracking and testing our liquid luck. Made with ❤️ by Davis Keene.
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard
           title="Most Shots Owed"
           value={topOwer.name}
@@ -180,6 +193,9 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
             100
           ).toFixed(1)}% of possible connections`}
         />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-8 mb-8">
         <StatCard
           title="Total Shots at Stake"
           value={`${totalShots} shots`}
@@ -188,6 +204,13 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
           trend={`${(totalShots / edges.length).toFixed(
             1,
           )} shots per bet on average`}
+        />
+        <StatCard
+          title="Total Shot Bets"
+          value={`${edges.length}`}
+          subValue={`Between ${nodes.length} people`}
+          icon={<Users className="h-8 w-8 text-indigo-500" />}
+          trend={`${(edges.length / nodes.length).toFixed(1)} bets per person`}
         />
       </div>
 
@@ -225,7 +248,8 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
                 {edges.map((edge, index) => (
                   <TableRow
                     key={index}
-                    className="hover:bg-gray-50 transition-colors duration-150"
+                    className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
+                    onClick={() => navigate(`/bets/${edge.id}`)}
                   >
                     <TableCell className="font-medium">
                       {nodeMap[edge.from]}

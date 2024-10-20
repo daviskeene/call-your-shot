@@ -11,6 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       className="min-h-screen flex flex-col bg-background"
       style={{
         width: "90vw",
+        paddingBottom: "4rem",
       }}
     >
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

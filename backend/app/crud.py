@@ -1,16 +1,19 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 
+
 # User CRUD operations
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
+
 def get_user_by_email(db: Session, email: str):
-    return db.query(models.User).filter(models.User.email == 
-email).first()
+    return db.query(models.User).filter(models.User.email == email).first()
+
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
+
 
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(name=user.name, email=user.email)
@@ -19,12 +22,15 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+
 # Bet CRUD operations
 def get_bet(db: Session, bet_id: int):
     return db.query(models.Bet).filter(models.Bet.id == bet_id).first()
 
+
 def get_bets(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Bet).offset(skip).limit(limit).all()
+
 
 def create_bet(db: Session, bet: schemas.BetCreate):
     db_bet = models.Bet(**bet.dict())
@@ -33,10 +39,11 @@ def create_bet(db: Session, bet: schemas.BetCreate):
     db.refresh(db_bet)
     return db_bet
 
+
 def get_user_shot_balances(db: Session, user_id: int):
     # Shots this user owes to others
     shots_owed = db.query(models.Bet).filter(models.Bet.bettor_id == user_id).all()
-    
+
     # Shots others owe this user
     shots_owed_to = db.query(models.Bet).filter(models.Bet.bettee_id == user_id).all()
 
@@ -61,5 +68,5 @@ def get_user_shot_balances(db: Session, user_id: int):
         "total_user_shots_outward": sum(shots_i_owe.values()),
         "total_user_shots_inward": sum(shots_others_owe_me.values()),
         "outward": shots_i_owe,
-        "inward": shots_others_owe_me
+        "inward": shots_others_owe_me,
     }

@@ -1,6 +1,8 @@
 import React from "react";
 import { useShotBalances } from "../api/hooks/useShotBalances";
 import LeaderboardComponent from "@/components/Leaderboard";
+import ShotBetsLoading from "@/components/ui/ShotBetLoading";
+import { Helmet } from "react-helmet";
 
 const Leaderboard: React.FC = () => {
   const query = useShotBalances();
@@ -8,7 +10,7 @@ const Leaderboard: React.FC = () => {
   if (query.isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
-        Loading...
+        <ShotBetsLoading />
       </div>
     );
   if (query.error)
@@ -20,6 +22,9 @@ const Leaderboard: React.FC = () => {
 
   return (
     <div className="container mx-auto py-8">
+      <Helmet>
+        <title>Call Your Shot | Leaderboard</title>
+      </Helmet>
       <LeaderboardComponent data={query.data} />
     </div>
   );

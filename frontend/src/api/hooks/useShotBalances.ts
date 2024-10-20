@@ -13,6 +13,7 @@ type GraphDataResponse = {
     reason: string;
     outcome: string | null;
     dateCreated: string;
+    id: number;
   }[];
   leaderboard: {
     id: number;
@@ -35,7 +36,7 @@ export const useShotBalances = () => {
 export const useUserShotBalances = (userId: string) => {
   return useQuery(
     ["userShotBalances", userId],
-    () => apiClient.get(`/users/${userId}/shot-balances`),
+    () => apiClient.get(`/users/${userId}/bet-summary`),
     {
       staleTime: 1000 * 60 * 5,
     },

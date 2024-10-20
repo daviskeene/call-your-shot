@@ -8,6 +8,19 @@ export const apiClient = {
     }
     return response.json();
   },
+  put: async (endpoint: string, data: any) => {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json();
+  },
   post: async (endpoint: string, data: any) => {
     const response = await fetch(`${API_URL}${endpoint}`, {
       method: "POST",

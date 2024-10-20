@@ -16,12 +16,15 @@ import {
   XCircle,
 } from "lucide-react";
 import { DashboardData } from "./ShotBetsDashboard";
+import { useNavigate } from "react-router-dom";
 
 type LeaderboardProps = {
   data: DashboardData | undefined;
 };
 
 const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
+  const navigate = useNavigate();
+
   const leaderboardData = useMemo(() => {
     if (!data) return [];
 
@@ -67,10 +70,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
                 <TableHead className="font-bold text-gray-800">Rank</TableHead>
                 <TableHead className="font-bold text-gray-800">Name</TableHead>
                 <TableHead className="font-bold text-gray-800">
-                  Shots Owed
+                  Shots On Others
                 </TableHead>
                 <TableHead className="font-bold text-gray-800">
-                  Shots Owed To
+                  Shots On Them
                 </TableHead>
                 <TableHead className="font-bold text-gray-800">
                   Net Shots
@@ -84,48 +87,56 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {leaderboardData.map((entry, index) => (
-                <TableRow
-                  key={entry.id}
-                  className="hover:bg-gray-50 transition-colors duration-150"
-                >
-                  <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell className="font-medium">{entry.name}</TableCell>
-                  <TableCell className="text-red-600">
-                    <span className="flex items-center">
-                      <ArrowUpRight className="h-4 w-4 mr-1" />
-                      {entry.totalShotsOwed}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-green-600">
-                    <span className="flex items-center">
-                      <ArrowDownRight className="h-4 w-4 mr-1" />
-                      {entry.totalShotsOwedTo}
-                    </span>
-                  </TableCell>
-                  <TableCell
-                    className={
-                      entry.totalShotsOwedTo - entry.totalShotsOwed > 0
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }
+              {leaderboardData
+                .sort((a, b) => {
+                  // Sort by net shots
+                  const netA = a.totalShotsOwed - a.totalShotsOwedTo;
+                  const netB = b.totalShotsOwed - b.totalShotsOwedTo;
+                  return netB - netA;
+                })
+                .map((entry, index) => (
+                  <TableRow
+                    key={entry.id}
+                    className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
+                    onClick={() => navigate(`/users/${entry.id}`)}
                   >
-                    {entry.totalShotsOwedTo - entry.totalShotsOwed}
-                  </TableCell>
-                  <TableCell>
-                    <span className="flex items-center text-green-600">
-                      <CheckCircle className="h-4 w-4 mr-1" />
-                      {entry.betsWon}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="flex items-center text-red-600">
-                      <XCircle className="h-4 w-4 mr-1" />
-                      {entry.betsLost}
-                    </span>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    <TableCell className="font-medium">{index + 1}</TableCell>
+                    <TableCell className="font-medium">{entry.name}</TableCell>
+                    <TableCell className="text-green-600">
+                      <span className="flex items-center">
+                        <ArrowUpRight className="h-4 w-4 mr-1" />
+                        {entry.totalShotsOwed}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-red-600">
+                      <span className="flex items-center">
+                        <ArrowDownRight className="h-4 w-4 mr-1" />
+                        {entry.totalShotsOwedTo}
+                      </span>
+                    </TableCell>
+                    <TableCell
+                      className={
+                        entry.totalShotsOwed - entry.totalShotsOwedTo > 0
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }
+                    >
+                      {entry.totalShotsOwed - entry.totalShotsOwedTo}
+                    </TableCell>
+                    <TableCell>
+                      <span className="flex items-center text-green-600">
+                        <CheckCircle className="h-4 w-4 mr-1" />
+                        {entry.betsWon}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="flex items-center text-red-600">
+                        <XCircle className="h-4 w-4 mr-1" />
+                        {entry.betsLost}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </div>

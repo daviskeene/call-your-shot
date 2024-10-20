@@ -1,7 +1,7 @@
 import React from "react";
 import { useUsers } from "../api/hooks/useUsers";
 import { useCreateBet } from "../api/hooks/useBets";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CupSoda, User, Users, MessageSquare } from "lucide-react";
-import { Combobox } from "@/components/ui/combobox"; // Import the Combobox component
+import { Combobox } from "@/components/ui/combobox";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   bettorId: z.string().min(1, { message: "Bettor is required" }),
@@ -30,6 +31,7 @@ const formSchema = z.object({
 const BetForm: React.FC = () => {
   const { data: users } = useUsers();
   const mutation = useCreateBet();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,6 +57,7 @@ const BetForm: React.FC = () => {
       {
         onSuccess: () => {
           form.reset();
+          navigate("/");
         },
         onError: (error) => {
           console.error(error);
@@ -63,7 +66,6 @@ const BetForm: React.FC = () => {
     );
   }
 
-  // Convert users to Combobox options
   const userOptions =
     users?.map((user) => ({
       label: user.name,
@@ -72,8 +74,8 @@ const BetForm: React.FC = () => {
 
   return (
     <Card className="shadow-2xl overflow-hidden">
-      <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
-        <CardTitle className="text-2xl font-bold text-white flex items-center space-x-2">
+      <CardHeader className="bg-white p-6">
+        <CardTitle className="text-2xl font-bold text-black flex items-center space-x-2">
           <CupSoda className="h-6 w-6" />
           <span>Create New Bet</span>
         </CardTitle>
@@ -81,7 +83,6 @@ const BetForm: React.FC = () => {
       <CardContent className="p-6 bg-white">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Bettor Field */}
             <FormField
               control={form.control}
               name="bettorId"
@@ -96,13 +97,13 @@ const BetForm: React.FC = () => {
                       options={userOptions}
                       placeholder="Select or type a Bettor"
                       value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {/* Bettee Field */}
             <FormField
               control={form.control}
               name="betteeId"
@@ -117,13 +118,13 @@ const BetForm: React.FC = () => {
                       options={userOptions}
                       placeholder="Select or type a Bettee"
                       value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {/* Shots Field */}
             <FormField
               control={form.control}
               name="shots"
@@ -148,7 +149,6 @@ const BetForm: React.FC = () => {
                 </FormItem>
               )}
             />
-            {/* Description Field */}
             <FormField
               control={form.control}
               name="description"
@@ -172,7 +172,6 @@ const BetForm: React.FC = () => {
                 </FormItem>
               )}
             />
-            {/* Submit Button */}
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
