@@ -19,7 +19,6 @@ const AppRoutes: React.FC = () => (
         <Route path="/create-bet" element={<CreateBet />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/search" element={<SearchPage />} />
-        {/* Add more routes as needed */}
       </Routes>
     </Layout>
   </Router>
