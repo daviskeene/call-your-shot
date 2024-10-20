@@ -42,7 +42,7 @@ def get_shot_relationships_graph(db: Session):
                 "reason": bet.description,
                 "outcome": bet.outcome,
                 "dateCreated": bet.date_created,
-                "id": bet.id
+                "id": bet.id,
             }
         )
 

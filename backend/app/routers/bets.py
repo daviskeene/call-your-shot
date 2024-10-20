@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session, aliased
 from typing import List
 
 from .. import schemas, crud, models
-from ..database import get_db
+from ..database import authenticate_query_param, get_db
 
 router = APIRouter(
     prefix="/bets",
@@ -12,11 +12,16 @@ router = APIRouter(
 
 
 @router.post("/", response_model=schemas.Bet)
-def create_bet(bet: schemas.BetCreate, db: Session = Depends(get_db)):
+def create_bet(
+    bet: schemas.BetCreate,
+    db: Session = Depends(get_db),
+):
+    # Bettor and bettee must both exist
     bettor = crud.get_user(db, bet.bettor_id)
     bettee = crud.get_user(db, bet.bettee_id)
     if not bettor or not bettee:
         raise HTTPException(status_code=404, detail="Bettor or Bettee not found")
+
     return crud.create_bet(db=db, bet=bet)
 
 
@@ -42,7 +47,7 @@ def read_bet(bet_id: int, db: Session = Depends(get_db)):
     if not db_bet:
         raise HTTPException(status_code=404, detail="Bet not found")
 
-    # Unpack the result and format the response
+    # Unpack the result and format response
     bet, bettor_name, bettee_name = db_bet
     formatted_bet = {
         "id": bet.id,
@@ -74,12 +79,16 @@ def update_bet(bet_id: int, bet: schemas.BetUpdate, db: Session = Depends(get_db
         setattr(db_bet, key, value)
     db.commit()
     db.refresh(db_bet)
-    
+
     return db_bet
 
 
 @router.delete("/{bet_id}")
-def delete_bet(bet_id: int, db: Session = Depends(get_db)):
+def delete_bet(
+    bet_id: int,
+    db: Session = Depends(get_db),
+    authenticated: bool = Depends(authenticate_query_param),
+):
     db_bet = crud.get_bet(db, bet_id)
     if not db_bet:
         raise HTTPException(status_code=404, detail="Bet not found")

@@ -29,8 +29,10 @@ class BetBase(BaseModel):
 class BetCreate(BetBase):
     pass
 
+
 class BetUpdate(BaseModel):
     outcome: str
+
 
 class Bet(BetBase):
     id: int

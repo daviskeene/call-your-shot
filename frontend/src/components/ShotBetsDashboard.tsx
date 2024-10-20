@@ -130,8 +130,13 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
         edges.filter((edge) => edge.from === node.id).map((edge) => edge.to),
       ).size,
     }));
-    return distinctBets.reduce((max, entry) =>
-      entry.distinct > max.distinct ? entry : max,
+    return distinctBets.reduce(
+      (max, entry) => (entry.distinct > max.distinct ? entry : max),
+      {
+        id: 0,
+        name: "",
+        distinct: 0,
+      },
     );
   }, [nodes, edges]);
 
