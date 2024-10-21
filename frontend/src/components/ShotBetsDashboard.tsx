@@ -160,7 +160,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <StatCard
           title="Most Shots Won"
           value={topOwer.name}
@@ -200,7 +200,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-8 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-8">
         <StatCard
           title="Total Shots at Stake"
           value={`${totalShots} shots`}
