@@ -14,7 +14,6 @@ router = APIRouter(
 def create_user(
     user: schemas.UserCreate,
     db: Session = Depends(get_db),
-    authenticated: bool = Depends(authenticate_query_param),
 ):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
