@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useCallShot, useBet } from "@/api/hooks/useBets";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,6 @@ const BetDetailPage: React.FC = () => {
   const { betId: id } = useParams<{ betId: string }>();
 
   const betId = Number(id);
-  const navigate = useNavigate();
 
   // Fetch the bet data
   const { data: bet, isLoading, error } = useBet(betId);
