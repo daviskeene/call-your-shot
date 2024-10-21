@@ -109,7 +109,7 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
       <header className="bg-white text-left mb-8">
         <div className="w-100 flex justify-between items-center">
           <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
-            {user.name}'s Shot Bets
+            {user.name} Shot Bets
           </h1>
           <Button
             variant="outline"
@@ -180,7 +180,7 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
                       onClick={() => navigate(`/bets/${bet.id}`)}
                     >
                       <TableCell className="font-medium">
-                        {bet.bettee_id}
+                        {bet.bettee_name}
                       </TableCell>
                       <TableCell>{bet.shots}</TableCell>
                       <TableCell>{bet.description}</TableCell>

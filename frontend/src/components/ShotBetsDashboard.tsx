@@ -61,7 +61,7 @@ const StatCard: React.FC<{
         {icon}
       </CardTitle>
     </CardHeader>
-    <CardContent className="bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <CardContent className="bg-white p-6">
       <p className="text-2xl font-extrabold text-gray-900 mb-2">{value}</p>
       <p className="text-sm text-gray-600 mb-4">{subValue}</p>
       <div className="text-xs font-medium text-gray-500 flex items-center">
@@ -162,7 +162,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard
-          title="Most Shots Owed"
+          title="Most Shots Won"
           value={topOwer.name}
           subValue={`${topOwer.totalShotsOwed} shots`}
           icon={<Diamond className="h-8 w-8 text-purple-500" />}
@@ -171,7 +171,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
           )}% of all bets`}
         />
         <StatCard
-          title="Most Shots Owed To"
+          title="Most Shots Taken / To Take"
           value={topOwed.name}
           subValue={`${topOwed.totalShotsOwedTo} shots`}
           icon={<Users className="h-8 w-8 text-indigo-500" />}
@@ -181,7 +181,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
         />
         <StatCard
           title="Oldest Outstanding Shot"
-          value={`${nodeMap[oldestShot.from]} owes ${nodeMap[oldestShot.to]}`}
+          value={`${oldestShot.value} shot(s) on ${nodeMap[oldestShot.to]}`}
           subValue={oldestShot.reason}
           icon={<Clock className="h-8 w-8 text-blue-500" />}
           trend={formatDistanceToNow(new Date(oldestShot.dateCreated), {
