@@ -156,7 +156,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
           </Button>
         </div>
         <p className="text-xl text-gray-600">
-          Tracking and testing our liquid luck. Made with ❤️ by Davis Keene.
+          Tracking and testing our liquid luck.
         </p>
       </header>
 

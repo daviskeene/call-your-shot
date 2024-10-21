@@ -15,7 +15,7 @@ const ShotGlass = () => (
       fill="transparent"
       initial={{ pathLength: 0 }}
       animate={{ pathLength: 1 }}
-      transition={{ duration: 2, repeat: Infinity }}
+      transition={{ duration: 1, repeat: Infinity }}
     />
     <motion.rect
       x="35"
@@ -24,7 +24,7 @@ const ShotGlass = () => (
       height="0"
       fill="#4F46E5"
       animate={{ height: 20, y: 55 }}
-      transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+      transition={{ duration: .5, repeat: Infinity, repeatType: "reverse" }}
     />
   </svg>
 );

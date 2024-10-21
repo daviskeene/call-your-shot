@@ -90,12 +90,12 @@ const BetForm: React.FC = () => {
                 <FormItem>
                   <FormLabel className="flex items-center space-x-2">
                     <User className="h-4 w-4" />
-                    <span>Bettor</span>
+                    <span>Sender</span>
                   </FormLabel>
                   <FormControl>
                     <Combobox
                       options={userOptions}
-                      placeholder="Select or type a Bettor"
+                      placeholder="Select or type a Sender"
                       value={field.value}
                       onChange={field.onChange}
                     />
@@ -111,12 +111,12 @@ const BetForm: React.FC = () => {
                 <FormItem>
                   <FormLabel className="flex items-center space-x-2">
                     <Users className="h-4 w-4" />
-                    <span>Bettee</span>
+                    <span>Receiver</span>
                   </FormLabel>
                   <FormControl>
                     <Combobox
                       options={userOptions}
-                      placeholder="Select or type a Bettee"
+                      placeholder="Select or type a Receiver"
                       value={field.value}
                       onChange={field.onChange}
                     />

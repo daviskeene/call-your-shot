@@ -50,12 +50,6 @@ const BetDetailPage: React.FC = () => {
       <Helmet>
         <title>Call Your Shot | Shot Details</title>
       </Helmet>
-      <header className="mb-8">
-        <Button variant="outline" onClick={() => navigate(-1)}>
-          Back to Bets
-        </Button>
-      </header>
-
       <Card className="shadow-xl overflow-hidden mb-8">
         <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
           <CardTitle className="text-2xl font-bold text-white flex items-center space-x-2">
@@ -78,7 +72,7 @@ const BetDetailPage: React.FC = () => {
             <div className="p-4 border rounded-lg bg-white">
               <h2 className="text-lg font-bold text-gray-800 flex items-center">
                 <Users className="h-5 w-5 mr-2 text-indigo-500" />
-                Shot Bet Owner
+                Shot Bet Sender
               </h2>
               <p className="text-md text-gray-700">{bet.bettor_name}</p>
             </div>
