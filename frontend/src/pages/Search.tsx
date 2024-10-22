@@ -78,7 +78,7 @@ const SearchPage: React.FC = () => {
             filteredUsers.map((user) => (
               <Card
                 key={user.id}
-                className="cursor-pointer hover:shadow-2xl transition-shadow duration-200 transform hover:-translate-y-1"
+                className="shadow overflow-hidden transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer"
                 onClick={() => handleUserSelect(user.id)}
               >
                 <CardHeader className="bg-white p-4 flex items-center">
