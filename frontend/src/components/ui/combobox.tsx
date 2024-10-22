@@ -51,9 +51,9 @@ export const Combobox: React.FC<ComboboxProps> = ({
       onSuccess: (data) => {
         queryClient.setQueryData<User[]>(["users"], (oldData) => [
           ...(oldData || []),
-          { id: data.id, name: data.name, email: data.email },
+          { id: String(data.id), name: data.name, email: data.email },
         ]);
-        handleSelect(data.id);
+        handleSelect(String(data.id));
       },
     },
   );
