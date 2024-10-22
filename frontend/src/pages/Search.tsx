@@ -29,7 +29,7 @@ const SearchPage: React.FC = () => {
   };
 
   // Handle user selection
-  const handleUserSelect = (userId: number) => {
+  const handleUserSelect = (userId: string | number) => {
     navigate(`/users/${userId}`);
   };
 
