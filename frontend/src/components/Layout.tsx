@@ -33,10 +33,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       </main>
       <footer className="mt-8">
-        Made with ❤️ by <a target="_blank" href="https://daviskeene.com" style={{
-          color: "#4F46E5",
-          textDecoration: "none",
-        }}>Davis Keene</a>
+        Made with ❤️ by{" "}
+        <a
+          target="_blank"
+          href="https://daviskeene.com"
+          style={{
+            color: "#4F46E5",
+            textDecoration: "none",
+          }}
+        >
+          Davis Keene
+        </a>
       </footer>
     </div>
   );
