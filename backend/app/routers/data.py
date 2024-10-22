@@ -52,6 +52,9 @@ def get_shot_relationships_graph(db: Session):
         if bet.bettee_id not in shots_owed_to_user:
             shots_owed_to_user[bet.bettee_id] = 0
 
+        # Skip over bets that have been resolved
+        if bet.outcome:
+            continue
         shots_owed_by_user[bet.bettor_id] += bet.shots
         shots_owed_to_user[bet.bettee_id] += bet.shots
 

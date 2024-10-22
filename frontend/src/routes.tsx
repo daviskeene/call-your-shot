@@ -8,6 +8,7 @@ import CreateBet from "./pages/CreateBet";
 import Leaderboard from "./pages/Leaderboard";
 import SearchPage from "./pages/Search";
 import BetDetailPage from "./pages/BetDetail";
+import Rules from "./pages/Rules";
 
 const AppRoutes: React.FC = () => (
   <Router>
@@ -19,6 +20,7 @@ const AppRoutes: React.FC = () => (
         <Route path="/create-bet" element={<CreateBet />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/rules" element={<Rules />} />
       </Routes>
     </Layout>
   </Router>

@@ -8,7 +8,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Clock, Network, TrendingUp, Diamond } from "lucide-react";
+import {
+  Users,
+  Clock,
+  Network,
+  TrendingUp,
+  Trophy,
+  Notebook,
+} from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
@@ -85,6 +92,8 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
 
   const { nodes, edges, leaderboard } = data;
 
+  const activeEdges = edges.filter((edge) => !edge.outcome);
+
   const nodeMap = useMemo(() => {
     return nodes.reduce(
       (acc, node) => {
@@ -108,15 +117,17 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
   }, [leaderboard]);
 
   const oldestShot = useMemo(() => {
-    return edges.reduce((oldest, current) =>
-      new Date(current.dateCreated) < new Date(oldest.dateCreated)
-        ? current
-        : oldest,
-    );
+    return activeEdges
+      .filter((edge) => !edge.outcome)
+      .reduce((oldest, current) =>
+        new Date(current.dateCreated) < new Date(oldest.dateCreated)
+          ? current
+          : oldest,
+      );
   }, [edges]);
 
   const totalShots = useMemo(() => {
-    return edges.reduce((sum, edge) => sum + edge.value, 0);
+    return activeEdges.reduce((sum, edge) => sum + edge.value, 0);
   }, [edges]);
 
   const formatDate = (dateString: string) => {
@@ -162,16 +173,16 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <StatCard
-          title="Most Shots Won"
+          title="Most Shots To Call"
           value={topOwer.name}
           subValue={`${topOwer.totalShotsOwed} shots`}
-          icon={<Diamond className="h-8 w-8 text-purple-500" />}
+          icon={<Trophy className="h-8 w-8 text-indigo-500" />}
           trend={`${((topOwer.totalShotsOwed / totalShots) * 100).toFixed(
             1,
           )}% of all bets`}
         />
         <StatCard
-          title="Most Shots Taken / To Take"
+          title="Most Shots To Take"
           value={topOwed.name}
           subValue={`${topOwed.totalShotsOwedTo} shots`}
           icon={<Users className="h-8 w-8 text-indigo-500" />}
@@ -183,7 +194,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
           title="Oldest Outstanding Shot"
           value={`${oldestShot.value} shot(s) on ${nodeMap[oldestShot.to]}`}
           subValue={oldestShot.reason}
-          icon={<Clock className="h-8 w-8 text-blue-500" />}
+          icon={<Clock className="h-8 w-8 text-indigo-500" />}
           trend={formatDistanceToNow(new Date(oldestShot.dateCreated), {
             addSuffix: true,
           })}
@@ -192,7 +203,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
           title="Most Diverse Bettor"
           value={mostDistinctBets.name}
           subValue={`Bets with ${mostDistinctBets.distinct} different people`}
-          icon={<Network className="h-8 w-8 text-green-500" />}
+          icon={<Network className="h-8 w-8 text-indigo-500" />}
           trend={`${(
             (mostDistinctBets.distinct / (nodes.length - 1)) *
             100
@@ -204,25 +215,25 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
         <StatCard
           title="Total Shots at Stake"
           value={`${totalShots} shots`}
-          subValue={`Across ${edges.length} bets`}
-          icon={<TrendingUp className="h-8 w-8 text-red-500" />}
-          trend={`${(totalShots / edges.length).toFixed(
+          subValue={`Across ${activeEdges.length} active bets`}
+          icon={<TrendingUp className="h-8 w-8 text-indigo-500" />}
+          trend={`${(totalShots / activeEdges.length).toFixed(
             1,
           )} shots per bet on average`}
         />
         <StatCard
-          title="Total Shot Bets"
+          title="Total Shot Bets Recorded"
           value={`${edges.length}`}
           subValue={`Between ${nodes.length} people`}
           icon={<Users className="h-8 w-8 text-indigo-500" />}
-          trend={`${(edges.length / nodes.length).toFixed(1)} bets per person`}
+          trend={`${edges.length - activeEdges.length} total resolved bets`}
         />
       </div>
 
       <Card className="shadow-2xl overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
+        <CardHeader className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
           <CardTitle className="text-2xl font-bold text-white flex items-center space-x-2">
-            <Diamond className="h-6 w-6" />
+            <Notebook className="h-6 w-6" />
             <span>Shot Bets Log</span>
           </CardTitle>
         </CardHeader>

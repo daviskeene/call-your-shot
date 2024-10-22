@@ -4,8 +4,13 @@ import LeaderboardComponent from "@/components/Leaderboard";
 import ShotBetsLoading from "@/components/ui/ShotBetLoading";
 import { Helmet } from "react-helmet";
 
+import { Book } from "lucide-react";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
+
 const Leaderboard: React.FC = () => {
   const query = useShotBalances();
+  const navigate = useNavigate();
 
   if (query.isLoading)
     return (
@@ -26,6 +31,17 @@ const Leaderboard: React.FC = () => {
         <title>Call Your Shot | Leaderboard</title>
       </Helmet>
       <LeaderboardComponent data={query.data} />
+      <Card
+        className="shadow-xl overflow-hidden transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer mt-8"
+        onClick={() => navigate(`/rules`)}
+      >
+        <CardHeader className="bg-white p-4 flex items-center">
+          <Book className="h-6 w-6 text-gray-800" />
+          <CardTitle className="text-lg font-semibold text-gray-800">
+            Read the Rules
+          </CardTitle>
+        </CardHeader>
+      </Card>
     </div>
   );
 };

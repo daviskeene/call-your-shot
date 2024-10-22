@@ -16,21 +16,27 @@ const Header: React.FC = () => {
     <>
       <div className="flex items-center">
         <Link to="/" className="mr-4 flex items-center">
-          <span className="font-bold">Call Your Shot</span>
+          <span className="font-bold text-indigo-500">Call Your Shot</span>
         </Link>
       </div>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link to="/leaderboard" className={navigationMenuTriggerStyle()}>
-              <NavigationMenuLink active={location.pathname === "/leaderboard"}>
+              <NavigationMenuLink
+                active={location.pathname === "/leaderboard"}
+                className="text-indigo-500"
+              >
                 Leaderboard
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Link to="/search" className={navigationMenuTriggerStyle()}>
-              <NavigationMenuLink active={location.pathname === "/search"}>
+              <NavigationMenuLink
+                active={location.pathname === "/search"}
+                className="text-indigo-500"
+              >
                 Search
               </NavigationMenuLink>
             </Link>

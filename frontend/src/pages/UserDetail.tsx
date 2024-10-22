@@ -139,7 +139,7 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
       </div>
 
       <Card className="shadow-2xl overflow-hidden mb-8">
-        <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
+        <CardHeader className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
           <CardTitle className="text-2xl font-bold text-white flex items-center space-x-2">
             <Diamond className="h-6 w-6" />
             <span>Shots On Others</span>
@@ -206,7 +206,7 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
       </Card>
 
       <Card className="shadow-2xl overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-green-600 to-teal-600 p-6">
+        <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6">
           <CardTitle className="text-2xl font-bold text-white flex items-center space-x-2">
             <Users className="h-6 w-6" />
             <span>Shots On Them</span>

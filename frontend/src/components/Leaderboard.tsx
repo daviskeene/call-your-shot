@@ -34,10 +34,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
           (edge) => edge.from === entry.id || edge.to === entry.id,
         );
         const betsWon = userEdges.filter(
-          (edge) => edge.from === entry.id && edge.outcome === "won",
+          (edge) => edge.from === entry.id && !!edge.outcome,
         ).length;
         const betsLost = userEdges.filter(
-          (edge) => edge.to === entry.id && edge.outcome === "won",
+          (edge) => edge.to === entry.id && !!edge.outcome,
         ).length;
 
         return {
@@ -55,8 +55,8 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
   }, [data]);
 
   return (
-    <Card className="shadow-2xl overflow-hidden">
-      <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 p-6">
+    <Card className="shadow-xl overflow-hidden">
+      <CardHeader className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
         <CardTitle className="text-2xl font-bold text-white flex items-center space-x-2">
           <Trophy className="h-6 w-6" />
           <span>Shot Bets Leaderboard</span>
@@ -79,10 +79,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
                   Net Shots
                 </TableHead>
                 <TableHead className="font-bold text-gray-800">
-                  Bets Won
+                  Bets Called
                 </TableHead>
                 <TableHead className="font-bold text-gray-800">
-                  Bets Lost
+                  Bets Taken
                 </TableHead>
               </TableRow>
             </TableHeader>
