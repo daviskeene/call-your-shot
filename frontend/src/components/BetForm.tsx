@@ -55,9 +55,9 @@ const BetForm: React.FC = () => {
         description: values.description,
       },
       {
-        onSuccess: () => {
+        onSuccess: ({ id }) => {
           form.reset();
-          navigate("/");
+          navigate(`/bets/${id}`);
         },
         onError: (error) => {
           console.error(error);
