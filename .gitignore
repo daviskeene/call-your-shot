@@ -1,1 +1,3 @@
 .env
+*.sqlite
+backend/scripts/oneoff.py

@@ -32,7 +32,7 @@ class BetCreate(BetBase):
 
 class BetUpdate(BaseModel):
     outcome: str
-
+    shots: Optional[int] = None
 
 class Bet(BetBase):
     id: int

@@ -34,10 +34,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
           (edge) => edge.from === entry.id || edge.to === entry.id,
         );
         const betsWon = userEdges.filter(
-          (edge) => edge.from === entry.id && !!edge.outcome,
+          (edge) => edge.from === entry.id && !!edge.outcome && edge.outcome !== "incomplete",
         ).length;
         const betsLost = userEdges.filter(
-          (edge) => edge.to === entry.id && !!edge.outcome,
+          (edge) => edge.to === entry.id && !!edge.outcome && edge.outcome !== "incomplete",
         ).length;
 
         return {

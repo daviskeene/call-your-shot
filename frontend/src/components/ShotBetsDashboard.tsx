@@ -277,16 +277,18 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
                     <TableCell>{edge.reason}</TableCell>
                     <TableCell>{formatDate(edge.dateCreated)}</TableCell>
                     <TableCell>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                          edge.outcome
-                            ? "bg-green-100 text-green-800"
-                            : "bg-yellow-100 text-yellow-800"
-                        }`}
-                      >
-                        {edge.outcome || "Pending"}
-                      </span>
-                    </TableCell>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                            edge.outcome === "incomplete"
+                              ? "bg-yellow-200 text-orange-900"
+                              : edge.outcome
+                              ? "bg-green-100 text-green-800"
+                              : "bg-yellow-100 text-yellow-800"
+                          }`}
+                        >
+                          {edge.outcome === "incomplete" ? "Incomplete" : edge.outcome?.split('T')[0] || "Pending"}
+                        </span>
+                      </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

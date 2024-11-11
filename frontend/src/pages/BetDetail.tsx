@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCallShot, useBet } from "@/api/hooks/useBets";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { Users, Clock, TrendingUp } from "lucide-react";
 import ShotBetsLoading from "@/components/ui/ShotBetLoading";
 import { Helmet } from "react-helmet";
+import ShotBetsError from "@/components/ui/ShotBetError";
 
 const BetDetailPage: React.FC = () => {
   const { betId: id } = useParams<{ betId: string }>();
@@ -19,14 +21,34 @@ const BetDetailPage: React.FC = () => {
   // Mutation to call the shot
   const callShotMutation = useCallShot(betId);
 
+  // State for input shots
+  const [shotsToCall, setShotsToCall] = useState<number | string>("");
+
   // Handle the call shot button click
   const handleCallShot = () => {
     if (bet) {
+      const shots = parseInt(shotsToCall as string, 10);
+
+      if (isNaN(shots) || shots <= 0 || shots > bet.shots) {
+        alert("Please enter a valid number of shots between 1 and the total shots.");
+        return;
+      }
+
+      const isComplete = shots === bet.shots;
+
       callShotMutation.mutate({
-        outcome: new Date().toLocaleString(),
+        outcome: isComplete ? new Date().toLocaleString() : "incomplete",
+        shots: isComplete ? shots : bet.shots - shots,
       });
     }
   };
+
+  // Default the input field value to bet.shots
+  React.useEffect(() => {
+    if (bet) {
+      setShotsToCall(bet.shots);
+    }
+  }, [bet]);
 
   if (isLoading) {
     return (
@@ -39,7 +61,10 @@ const BetDetailPage: React.FC = () => {
   if (error || !bet) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-red-500">Error loading shot bet details.</p>
+        <ShotBetsError onRetry={() => {
+          // reload page
+          window.location.reload();
+        }}/>
       </div>
     );
   }
@@ -79,7 +104,7 @@ const BetDetailPage: React.FC = () => {
             <div className="p-4 border rounded-lg bg-white">
               <h2 className="text-lg font-bold text-gray-800 flex items-center">
                 <Users className="h-5 w-5 mr-2 text-indigo-500" />
-                Shot Bet Reciever
+                Shot Bet Receiver
               </h2>
               <p className="text-md text-gray-700">{bet.bettee_name}</p>
             </div>
@@ -87,7 +112,7 @@ const BetDetailPage: React.FC = () => {
             <div className="p-4 border rounded-lg bg-white">
               <h2 className="text-lg font-bold text-gray-800 flex items-center">
                 <Clock className="h-5 w-5 mr-2 text-blue-500" />
-                Shots at Stake
+                Shots Left at Stake
               </h2>
               <p className="text-md text-gray-700">{bet.shots} shots</p>
             </div>
@@ -99,33 +124,48 @@ const BetDetailPage: React.FC = () => {
               </h2>
               <p className="text-md text-gray-700">
                 {bet.outcome
-                  ? `Called on: ${format(
-                      new Date(bet.outcome),
-                      "MMM d, yyyy, hh:mm a",
-                    )}`
+                  ? bet.outcome === "incomplete"
+                    ? "Incomplete"
+                    : `Called on: ${format(
+                        new Date(bet.outcome),
+                        "MMM d, yyyy, hh:mm a"
+                      )}`
                   : "Pending"}
               </p>
             </div>
           </div>
 
-          {!bet.outcome && (
-            <Button
-              variant="default"
-              className="w-full py-3 text-lg font-semibold"
-              onClick={handleCallShot}
-              disabled={callShotMutation.isLoading}
-            >
-              {callShotMutation.isLoading ? "Calling Shot..." : "Call Shot"}
-            </Button>
-          )}
-
-          {bet.outcome && (
-            <div className="text-center mt-4">
-              <p className="text-lg font-bold text-green-600">
-                Shot has been called!
-              </p>
+          {(!bet.outcome || bet.outcome === "incomplete") && (
+          <div className="flex flex-wrap items-center gap-4">
+            <label className="text-sm font-medium text-gray-800 w-full md:w-auto">
+              Number of shots to call:
+            </label>
+            <div className="flex flex-grow items-center space-x-4 w-full md:w-auto">
+              <Input
+                type="number"
+                className="w-full md:flex-grow"
+                value={shotsToCall}
+                onChange={(e) => {
+                  const value = Math.max(1, Math.min(Number(e.target.value), bet.shots));
+                  setShotsToCall(value);
+                }}
+              />
+              <Button
+                variant="default"
+                className="w-full md:w-auto"
+                onClick={handleCallShot}
+                disabled={callShotMutation.isLoading}
+              >
+                {callShotMutation.isLoading ? "Calling..." : "Call Shots!"}
+              </Button>
             </div>
-          )}
+          </div>
+        )}
+        {bet.outcome && bet.outcome !== "incomplete" && (
+          <div className="text-center mt-4">
+            <p className="text-lg font-bold text-green-600">Shot bet has been completed!</p>
+          </div>
+        )}
         </CardContent>
       </Card>
     </div>

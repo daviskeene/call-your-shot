@@ -75,8 +75,13 @@ def update_bet(bet_id: int, bet: schemas.BetUpdate, db: Session = Depends(get_db
     db_bet = crud.get_bet(db, bet_id)
     if not db_bet:
         raise HTTPException(status_code=404, detail="Bet not found")
+
     for key, value in bet.dict().items():
-        setattr(db_bet, key, value)
+        attr_value = value
+        if key == "outcome" and value.lower() != "incomplete":
+            # Convert the outcome value to SQLite time field format
+            attr_value = models.convert_iso_str_to_sqllite_datetime_str(value)
+        setattr(db_bet, key, attr_value)
     db.commit()
     db.refresh(db_bet)
 

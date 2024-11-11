@@ -188,12 +188,14 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
                       <TableCell>
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            bet.outcome
+                            bet.outcome === "incomplete"
+                              ? "bg-yellow-200 text-orange-900"
+                              : bet.outcome
                               ? "bg-green-100 text-green-800"
                               : "bg-yellow-100 text-yellow-800"
                           }`}
                         >
-                          {bet.outcome || "Pending"}
+                          {bet.outcome === "incomplete" ? "Incomplete" : bet.outcome || "Pending"}
                         </span>
                       </TableCell>
                     </TableRow>
@@ -255,12 +257,14 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
                       <TableCell>
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            bet.outcome
+                            bet.outcome === "incomplete"
+                              ? "bg-yellow-200 text-orange-900"
+                              : bet.outcome
                               ? "bg-green-100 text-green-800"
                               : "bg-yellow-100 text-yellow-800"
                           }`}
                         >
-                          {bet.outcome || "Pending"}
+                          {bet.outcome === "incomplete" ? "Incomplete" : bet.outcome || "Pending"}
                         </span>
                       </TableCell>
                     </TableRow>

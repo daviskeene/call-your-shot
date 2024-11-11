@@ -14,8 +14,8 @@ export const useCallShot = (betId: number) => {
     (
       newBet: Omit<
         Bet,
-        "id" | "date_created" | "bettor_id" | "bettee_id" | "shots"
-      >,
+        "id" | "date_created" | "bettor_id" | "bettee_id"
+      > & { outcome: string | undefined },
     ) => apiClient.put(`/bets/${betId}`, newBet),
     {
       onMutate: async () => {
