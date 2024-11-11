@@ -30,7 +30,9 @@ const BetDetailPage: React.FC = () => {
       const shots = parseInt(shotsToCall as string, 10);
 
       if (isNaN(shots) || shots <= 0 || shots > bet.shots) {
-        alert("Please enter a valid number of shots between 1 and the total shots.");
+        alert(
+          "Please enter a valid number of shots between 1 and the total shots.",
+        );
         return;
       }
 
@@ -61,10 +63,12 @@ const BetDetailPage: React.FC = () => {
   if (error || !bet) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <ShotBetsError onRetry={() => {
-          // reload page
-          window.location.reload();
-        }}/>
+        <ShotBetsError
+          onRetry={() => {
+            // reload page
+            window.location.reload();
+          }}
+        />
       </div>
     );
   }
@@ -128,7 +132,7 @@ const BetDetailPage: React.FC = () => {
                     ? "Incomplete"
                     : `Called on: ${format(
                         new Date(bet.outcome),
-                        "MMM d, yyyy, hh:mm a"
+                        "MMM d, yyyy, hh:mm a",
                       )}`
                   : "Pending"}
               </p>
@@ -136,36 +140,41 @@ const BetDetailPage: React.FC = () => {
           </div>
 
           {(!bet.outcome || bet.outcome === "incomplete") && (
-          <div className="flex flex-wrap items-center gap-4">
-            <label className="text-sm font-medium text-gray-800 w-full md:w-auto">
-              Number of shots to call:
-            </label>
-            <div className="flex flex-grow items-center space-x-4 w-full md:w-auto">
-              <Input
-                type="number"
-                className="w-full md:flex-grow"
-                value={shotsToCall}
-                onChange={(e) => {
-                  const value = Math.max(1, Math.min(Number(e.target.value), bet.shots));
-                  setShotsToCall(value);
-                }}
-              />
-              <Button
-                variant="default"
-                className="w-full md:w-auto"
-                onClick={handleCallShot}
-                disabled={callShotMutation.isLoading}
-              >
-                {callShotMutation.isLoading ? "Calling..." : "Call Shots!"}
-              </Button>
+            <div className="flex flex-wrap items-center gap-4">
+              <label className="text-sm font-medium text-gray-800 w-full md:w-auto">
+                Number of shots to call:
+              </label>
+              <div className="flex flex-grow items-center space-x-4 w-full md:w-auto">
+                <Input
+                  type="number"
+                  className="w-full md:flex-grow"
+                  value={shotsToCall}
+                  onChange={(e) => {
+                    const value = Math.max(
+                      1,
+                      Math.min(Number(e.target.value), bet.shots),
+                    );
+                    setShotsToCall(value);
+                  }}
+                />
+                <Button
+                  variant="default"
+                  className="w-full md:w-auto"
+                  onClick={handleCallShot}
+                  disabled={callShotMutation.isLoading}
+                >
+                  {callShotMutation.isLoading ? "Calling..." : "Call Shots!"}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
-        {bet.outcome && bet.outcome !== "incomplete" && (
-          <div className="text-center mt-4">
-            <p className="text-lg font-bold text-green-600">Shot bet has been completed!</p>
-          </div>
-        )}
+          )}
+          {bet.outcome && bet.outcome !== "incomplete" && (
+            <div className="text-center mt-4">
+              <p className="text-lg font-bold text-green-600">
+                Shot bet has been completed!
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

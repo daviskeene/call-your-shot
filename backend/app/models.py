@@ -4,11 +4,13 @@ from sqlalchemy.orm import relationship
 from .database import Base
 from datetime import datetime
 
+
 class SQLiteDateTime(TypeDecorator):
     """
     Custom SQLite-compatible DateTime type.
     Converts ISO 8601 strings without fractional seconds to Python datetime objects and vice versa.
     """
+
     impl = String
 
     def process_bind_param(self, value, dialect):
@@ -26,6 +28,7 @@ class SQLiteDateTime(TypeDecorator):
 
 def utcnow_str():
     return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def convert_iso_str_to_sqllite_datetime_str(iso_str) -> str:
     try:

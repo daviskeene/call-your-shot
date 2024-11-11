@@ -12,10 +12,9 @@ export const useCallShot = (betId: number) => {
   const queryClient = useQueryClient();
   return useMutation(
     (
-      newBet: Omit<
-        Bet,
-        "id" | "date_created" | "bettor_id" | "bettee_id"
-      > & { outcome: string | undefined },
+      newBet: Omit<Bet, "id" | "date_created" | "bettor_id" | "bettee_id"> & {
+        outcome: string | undefined;
+      },
     ) => apiClient.put(`/bets/${betId}`, newBet),
     {
       onMutate: async () => {
