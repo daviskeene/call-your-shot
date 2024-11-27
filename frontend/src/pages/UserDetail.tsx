@@ -113,10 +113,10 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
           </h1>
           <Button
             variant="outline"
-            aria-label="View Leaderboard"
-            onClick={() => navigate(`/leaderboard`)}
+            aria-label="New Shot Bet"
+            onClick={() => navigate(`/create-bet`)}
           >
-            View Leaderboard
+            New Shot Bet
           </Button>
         </div>
       </header>

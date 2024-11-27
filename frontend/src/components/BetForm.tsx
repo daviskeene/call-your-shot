@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CupSoda, User, Users, MessageSquare } from "lucide-react";
+import { CupSoda, User, Users, MessageSquare, ArrowUpDown } from "lucide-react";
 import { Combobox } from "@/components/ui/combobox";
 import { useNavigate } from "react-router-dom";
 
@@ -72,6 +72,14 @@ const BetForm: React.FC = () => {
       value: user.id.toString(),
     })) || [];
 
+  // Function to swap the values of bettorId and betteeId
+  const swapBettorAndBettee = () => {
+    const currentBettorId = form.getValues("bettorId");
+    const currentBetteeId = form.getValues("betteeId");
+    form.setValue("bettorId", currentBetteeId);
+    form.setValue("betteeId", currentBettorId);
+  };
+
   return (
     <Card className="shadow-2xl overflow-hidden">
       <CardHeader className="bg-white p-6">
@@ -80,6 +88,7 @@ const BetForm: React.FC = () => {
           <span>Create New Bet</span>
         </CardTitle>
       </CardHeader>
+
       <CardContent className="p-6 bg-white">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -125,6 +134,18 @@ const BetForm: React.FC = () => {
                 </FormItem>
               )}
             />
+            {form.getValues("betteeId") && form.getValues("bettorId") && (
+              <div className="flex">
+                <Button
+                  type="button"
+                  onClick={swapBettorAndBettee}
+                  className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
+                >
+                  <ArrowUpDown className="h-4 w-4" />
+                  <span>Swap Sender / Receiver</span>
+                </Button>
+              </div>
+            )}
             <FormField
               control={form.control}
               name="shots"
