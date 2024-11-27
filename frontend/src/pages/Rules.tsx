@@ -93,12 +93,13 @@ const Rules: React.FC = () => {
                     1. Definition & Overview
                   </h2>
                   <p className="text-gray-700 text-left">
-                    A Shot Bet is a social agreement between two
-                    consenting parties where one party agrees to take a certain number of shots of
-                    liquor upon losing a predetermined wager. The general gist of the rules is that when
-                    calling shots on someone,<b> you can be annoying, but don't be reckless. </b>
-                    This platform tracks finalized bets only—indeterminate wagers or
-                    speculative agreements are not supported.
+                    A Shot Bet is a social agreement between two consenting
+                    parties where one party agrees to take a certain number of
+                    shots of liquor upon losing a predetermined wager. The
+                    general gist of the rules is that when calling shots on
+                    someone,<b> you can be annoying, but don't be reckless. </b>
+                    This platform tracks finalized bets only—indeterminate
+                    wagers or speculative agreements are not supported.
                   </p>
                 </section>
 
@@ -158,8 +159,9 @@ const Rules: React.FC = () => {
                         context but must adhere to safety and decency standards.
                       </li>
                       <li>
-                        You may call up to the number of shots agreed upon in the bet.
-                        Marginal shot bets are allowed (ie. calling one of three shots owed).
+                        You may call up to the number of shots agreed upon in
+                        the bet. Marginal shot bets are allowed (ie. calling one
+                        of three shots owed).
                       </li>
                     </ul>
 
@@ -167,17 +169,19 @@ const Rules: React.FC = () => {
                       3.2. Ethical Restrictions
                     </h3>
                     <ul className="list-disc ml-6 space-y-2 text-gray-700 text-left">
-                      <li>No calls during professional or religious commitments.</li>
                       <li>
-                        Calls must not endanger the physical safety
-                        of the losing party.
+                        No calls during professional or religious commitments.
                       </li>
                       <li>
-                        Excessive demands violate the spirit of the
-                        agreement.
+                        Calls must not endanger the physical safety of the
+                        losing party.
                       </li>
                       <li>
-                        Targeting individuals from multiple bets owed is discouraged. Again, best judgement is advised.
+                        Excessive demands violate the spirit of the agreement.
+                      </li>
+                      <li>
+                        Targeting individuals from multiple bets owed is
+                        discouraged. Again, best judgement is advised.
                       </li>
                     </ul>
                   </div>
@@ -205,7 +209,9 @@ const Rules: React.FC = () => {
                           <td className="p-4 border font-semibold text-left">
                             Standard Volume
                           </td>
-                          <td className="p-4 border text-left">1.5 oz (44 ml)</td>
+                          <td className="p-4 border text-left">
+                            1.5 oz (44 ml)
+                          </td>
                         </tr>
                         <tr>
                           <td className="p-4 border font-semibold text-left">
@@ -250,11 +256,13 @@ const Rules: React.FC = () => {
                       medication, or other reasonable constraints.
                     </li>
                   </ul>
-                <br />
-                <p className="text-gray-700 text-left">
-                    The maintainer of this site (Davis Keene) is not responsible for any harm or injury resulting from the execution of shot bets.
-                    Any shots called on this platform are done so at the discretion of the participants.
-                </p>
+                  <br />
+                  <p className="text-gray-700 text-left">
+                    The maintainer of this site (Davis Keene) is not responsible
+                    for any harm or injury resulting from the execution of shot
+                    bets. Any shots called on this platform are done so at the
+                    discretion of the participants.
+                  </p>
                 </section>
               </div>
             </CardContent>
