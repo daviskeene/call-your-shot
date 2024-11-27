@@ -10,9 +10,9 @@ const Rules: React.FC = () => {
     { id: "definition", title: "1. Definition & Overview" },
     { id: "formation", title: "2. Bet Formation" },
     { id: "execution", title: "3. Execution Rules" },
-    { id: "timing", title: "4. Time Limitations" },
+    { id: "timing", title: "4. Expiration Guidelines" },
     { id: "specifications", title: "5. Shot Specifications" },
-    { id: "safety", title: "6. Safety & Responsibility" },
+    { id: "safety", title: "6. Safety" },
   ];
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const Rules: React.FC = () => {
             <CardHeader className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
               <CardTitle className="text-2xl font-bold text-white flex items-center gap-2">
                 <ScrollText className="h-6 w-6" />
-                <span className="text-left">Official Shot Bet Rules</span>
+                <span className="text-left">Shot Bet Rules & Guidelines</span>
               </CardTitle>
             </CardHeader>
 
@@ -93,11 +93,12 @@ const Rules: React.FC = () => {
                     1. Definition & Overview
                   </h2>
                   <p className="text-gray-700 text-left">
-                    A Shot Bet constitutes a formal wagering agreement between
-                    two consenting parties wherein the losing participant agrees
-                    to consume a predetermined quantity of hard-liquor shots at
-                    the discretion of the winning party. This document outlines
-                    the governing rules and regulations for such agreements.
+                    A Shot Bet is a social agreement between two
+                    consenting parties where one party agrees to take a certain number of shots of
+                    liquor upon losing a predetermined wager. The general gist of the rules is that when
+                    calling shots on someone,<b> you can be annoying, but don't be reckless. </b>
+                    This platform tracks finalized bets only—indeterminate wagers or
+                    speculative agreements are not supported.
                   </p>
                 </section>
 
@@ -107,29 +108,30 @@ const Rules: React.FC = () => {
                   </h2>
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      2.1. Required Elements
-                    </h3>
-                    <p className="text-gray-700 mb-4 text-left">
-                      The following elements must be present for a valid shot
-                      bet:
-                    </p>
-                    <ul className="list-decimal ml-6 space-y-2 text-gray-700 text-left">
-                      <li>
-                        Explicit agreement from both participating parties
-                      </li>
-                      <li>Clear and unambiguous wager conditions</li>
-                      <li>Specified quantity of shots</li>
-                      <li>Defined criteria for determining the winner</li>
-                    </ul>
-
-                    <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      2.2. Documentation
+                      2.1. Key Requirements
                     </h3>
                     <p className="text-gray-700 text-left">
-                      All terms must be documented within the platform at the
-                      time of bet resolution. Verbal modifications to documented
-                      terms are not binding.
+                      For a Shot Bet to be valid, the following conditions must
+                      be met:
                     </p>
+                    <ul className="list-disc ml-6 space-y-2 text-gray-700 text-left">
+                      <li>
+                        <strong>Mutual Agreement:</strong> Both parties must
+                        explicitly agree to the terms.
+                      </li>
+                      <li>
+                        <strong>Clear Terms:</strong> The wager conditions and
+                        criteria for determining the winner must be unambiguous.
+                      </li>
+                      <li>
+                        <strong>Specified Quantity:</strong> The number of shots
+                        owed should be clearly defined.
+                      </li>
+                      <li>
+                        <strong>Documentation:</strong> Bets must be recorded in
+                        the platform after resolution.
+                      </li>
+                    </ul>
                   </div>
                 </section>
 
@@ -139,32 +141,43 @@ const Rules: React.FC = () => {
                   </h2>
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      3.1. Shot Calling Protocol
+                      3.1. Proper Protocol
                     </h3>
+                    <p className="text-gray-700 text-left">
+                      Once a bet has been resolved, the winning party may call
+                      the shot(s) under these guidelines:
+                    </p>
                     <ul className="list-disc ml-6 space-y-2 text-gray-700 text-left">
+                      <li>Advance notice is encouraged but not required.</li>
                       <li>
-                        Winner may provide as little or as much advance notice
-                        as they see fit
+                        All shots must be documented either by video or in the
+                        presence of witnesses.
                       </li>
-                      <li>Notice may be given through any contact method</li>
                       <li>
-                        Witness must be present, or shot must be recorded for
-                        proof of exercising the bet
+                        The winning party is entitled to creative timing and
+                        context but must adhere to safety and decency standards.
+                      </li>
+                      <li>
+                        You may call up to the number of shots agreed upon in the bet.
+                        Marginal shot bets are allowed (ie. calling one of three shots owed).
                       </li>
                     </ul>
 
                     <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      3.2. Execution Restrictions
+                      3.2. Ethical Restrictions
                     </h3>
                     <ul className="list-disc ml-6 space-y-2 text-gray-700 text-left">
+                      <li>No calls during professional or religious commitments.</li>
                       <li>
-                        No calls during work hours or professional obligations
+                        Calls must not endanger the physical safety
+                        of the losing party.
                       </li>
                       <li>
-                        No calls during operation of vehicles or machinery
+                        Excessive demands violate the spirit of the
+                        agreement.
                       </li>
                       <li>
-                        No calls during religious observations or family events
+                        Targeting individuals from multiple bets owed is discouraged. Again, best judgement is advised.
                       </li>
                     </ul>
                   </div>
@@ -172,122 +185,76 @@ const Rules: React.FC = () => {
 
                 <section id="timing" className="mb-12">
                   <h2 className="text-2xl font-bold text-gray-800 mb-4 text-left">
-                    4. Time Limitations
+                    4. Expiration Guidelines
                   </h2>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      4.1. Standard Expiration Periods
-                    </h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse bg-white">
-                        <thead>
-                          <tr className="bg-gray-50">
-                            <th className="p-4 border text-left font-semibold">
-                              Bet Type
-                            </th>
-                            <th className="p-4 border text-left font-semibold">
-                              Expiration Period
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="p-4 border">
-                              Fixed Outcome Event (wager, information, etc)
-                            </td>
-                            <td className="p-4 border">No expiration</td>
-                          </tr>
-                          <tr>
-                            <td className="p-4 border">
-                              Long-term Predictions
-                            </td>
-                            <td className="p-4 border">
-                              1 year from determination
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="p-4 border">Perpetual Bets</td>
-                            <td className="p-4 border">No expiration</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                  <p className="text-gray-700 text-left">
+                    All bets expire at the conclusion of the calendar year in
+                    which the bet was finalized. Any unclaimed shots by December
+                    31st are forfeited.
+                  </p>
                 </section>
 
                 <section id="specifications" className="mb-12">
                   <h2 className="text-2xl font-bold text-gray-800 mb-4 text-left">
                     5. Shot Specifications
                   </h2>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      5.1. Technical Requirements
-                    </h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse bg-white">
-                        <tbody>
-                          <tr>
-                            <td className="p-4 border font-semibold text-left">
-                              Standard Volume
-                            </td>
-                            <td className="p-4 border text-left">
-                              1.5 oz (44ml)
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="p-4 border font-semibold text-left">
-                              Minimum ABV
-                            </td>
-                            <td className="p-4 border text-left">20%</td>
-                          </tr>
-                          <tr>
-                            <td className="p-4 border font-semibold text-left">
-                              Maximum ABV
-                            </td>
-                            <td className="p-4 border text-left">70%</td>
-                          </tr>
-                          <tr>
-                            <td className="p-4 border font-semibold text-left">
-                              Production Requirements
-                            </td>
-                            <td className="p-4 border text-left">
-                              No production requirement
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse bg-white">
+                      <tbody>
+                        <tr>
+                          <td className="p-4 border font-semibold text-left">
+                            Standard Volume
+                          </td>
+                          <td className="p-4 border text-left">1.5 oz (44 ml)</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 border font-semibold text-left">
+                            Minimum ABV
+                          </td>
+                          <td className="p-4 border text-left">15%</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 border font-semibold text-left">
+                            Maximum Shots (24 Hours)
+                          </td>
+                          <td className="p-4 border text-left">
+                            No fixed limit (use discretion).
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </section>
 
                 <section id="safety" className="mb-12">
                   <h2 className="text-2xl font-bold text-gray-800 mb-4 text-left">
-                    6. Safety & Responsibility
+                    6. Safety
                   </h2>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      6.1. Non-Negotiable Safety Requirements
-                    </h3>
-                    <ul className="list-disc ml-6 space-y-2 text-gray-700 text-left">
-                      <li>All participants must be of legal drinking age</li>
-                      <li>Maximum of 5 shots per 24-hour period</li>
-                      <li>Safe environment must be guaranteed</li>
-                    </ul>
-
-                    <h3 className="text-lg font-semibold text-gray-800 text-left">
-                      6.2. Deferral Rights
-                    </h3>
-                    <p className="text-gray-700 text-left">
-                      The losing party maintains the right to defer shot
-                      execution under the following conditions:
-                    </p>
-                    <ul className="list-disc ml-6 space-y-2 text-gray-700 text-left">
-                      <li>Medical conditions or illness</li>
-                      <li>Prescription medication interactions</li>
-                      <li>Religious observances</li>
-                      <li>Professional obligations</li>
-                    </ul>
-                  </div>
+                  <p className="text-gray-700 text-left">
+                    Safety and respect are non-negotiable. The following
+                    practices are required to ensure a fair and enjoyable
+                    experience for all participants:
+                  </p>
+                  <br />
+                  <ul className="list-disc ml-6 space-y-2 text-gray-700 text-left">
+                    <li>
+                      Participants must be of legal drinking age and in sound
+                      health.
+                    </li>
+                    <li>
+                      Shots must not be demanded in unsafe environments or under
+                      conditions where harm could occur.
+                    </li>
+                    <li>
+                      The losing party may defer a shot due to illness,
+                      medication, or other reasonable constraints.
+                    </li>
+                  </ul>
+                <br />
+                <p className="text-gray-700 text-left">
+                    The maintainer of this site (Davis Keene) is not responsible for any harm or injury resulting from the execution of shot bets.
+                    Any shots called on this platform are done so at the discretion of the participants.
+                </p>
                 </section>
               </div>
             </CardContent>
