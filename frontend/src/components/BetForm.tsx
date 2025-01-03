@@ -101,12 +101,12 @@ const BetForm: React.FC = () => {
                 <FormItem>
                   <FormLabel className="flex items-center space-x-2">
                     <User className="h-4 w-4" />
-                    <span>Sender</span>
+                    <span>Creator</span>
                   </FormLabel>
                   <FormControl>
                     <Combobox
                       options={userOptions}
-                      placeholder="Select or type a Sender"
+                      placeholder="Select or type a Creator"
                       value={field.value}
                       onChange={field.onChange}
                     />

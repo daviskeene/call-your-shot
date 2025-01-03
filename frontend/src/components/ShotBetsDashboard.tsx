@@ -160,16 +160,17 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({
   return (
     <div className="min-h-screen pt-4">
       <header className="bg-white text-left mb-8">
-        <div className="w-100 flex justify-between items-center">
+        <div className="w-100 flex justify-between items-top">
           <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
             Shot Bets Dashboard
           </h1>
           <Button
+            className="text-md p-4 border border-indigo-200 rounded-lg"
             variant="outline"
             aria-label="New Shot Bet"
             onClick={() => navigate("/create-bet")}
           >
-            New Shot Bet
+            + New Shot Bet
           </Button>
         </div>
         <p className="text-xl text-gray-600">

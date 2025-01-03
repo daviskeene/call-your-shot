@@ -53,7 +53,7 @@ const ShotBetsFeed: React.FC<{ events: EventItem[] | undefined }> = ({
                     )}
                   </CardTitle>
                   <Badge variant="secondary">
-                    {format(parseISO(event.event_date), "PPpp")}
+                    {format(parseISO(event.event_date), "P")}
                   </Badge>
                 </div>
               </CardHeader>
