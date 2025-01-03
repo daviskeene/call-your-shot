@@ -32,6 +32,16 @@ const Header: React.FC = () => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
+            <Link to="/log" className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink
+                active={location.pathname === "/log"}
+                className="text-indigo-500"
+              >
+                Log
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Link to="/search" className={navigationMenuTriggerStyle()}>
               <NavigationMenuLink
                 active={location.pathname === "/search"}

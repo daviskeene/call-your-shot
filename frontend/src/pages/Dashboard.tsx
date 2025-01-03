@@ -5,9 +5,11 @@ import { useShotBalances } from "@/api/hooks/useShotBalances";
 import ShotBetsDashboard from "@/components/ShotBetsDashboard";
 import ShotBetsLoading from "@/components/ui/ShotBetLoading";
 import ShotBetsError from "@/components/ui/ShotBetError";
+import { useEvents } from "@/api/hooks/useEvents";
 
 const Dashboard: React.FC = () => {
   const query = useShotBalances();
+  const eventsQuery = useEvents();
 
   if (query.isLoading)
     return (
@@ -27,7 +29,7 @@ const Dashboard: React.FC = () => {
       <Helmet>
         <title>Call Your Shot</title>
       </Helmet>
-      <ShotBetsDashboard data={query.data} />
+      <ShotBetsDashboard data={query.data} events={eventsQuery.data?.events} />
     </div>
   );
 };

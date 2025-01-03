@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
@@ -87,3 +88,66 @@ def get_shot_relationships_graph(db: Session):
 def get_user_shot_relationships(db: Session = Depends(get_db)):
     graph_data = get_shot_relationships_graph(db=db)
     return graph_data
+
+
+@router.get("/events", response_model=dict)
+def get_event_log(db: Session = Depends(get_db)):
+    """
+    Simple funtionality to translate the bet data into a list of events.
+    Each bet can be transformed into several events. For simplicity, we'll focus on the following two:
+    - A bet creation event (derived from the Bet.date_created)
+    - A bet resolution event (derived from the Bet.outcome)
+
+    The response will be a list of events, sorted by the event date.
+    Events will be in the following JSON format:
+    {
+        "id": int,
+        "type": str,
+        "date": datetime,
+        "description": str
+    }
+
+    The description field will contain the following information:
+    - For bet creation events: "User A bet User B N shots: description"
+    - For bet resolution events: "User A called N shots on User B"
+    """
+
+    # Get all bets
+    bets = db.query(models.Bet).all()
+
+    # Create a list of events
+    events = []
+
+    # Create a list of bet creation events
+    for bet in bets:
+        events.append(
+            {
+                "id": bet.id,
+                "type": "bet_creation",
+                "event_date": bet.date_created,
+                "description": f"{bet.bettor.name} bet {bet.bettee.name} {bet.shots} shot(s): {bet.description}",
+            }
+        )
+
+        # Create a bet resolution event if the bet has been resolved
+        if bet.outcome and bet.outcome != "incomplete" and bet.outcome != "expired":
+            try:
+                outcome_date = datetime.strptime(bet.outcome[:-4], "%Y-%m-%dT%H:%M")
+                print(bet.outcome)
+                print(outcome_date)
+                print("---")
+                events.append(
+                    {
+                        "id": bet.id,
+                        "type": "bet_resolution",
+                        "event_date": outcome_date,
+                        "description": f"{bet.bettor.name} called {bet.shots} shot(s) on {bet.bettee.name}",
+                    }
+                )
+            except ValueError:
+                print(f"Invalid date format: {bet.outcome}")
+
+    # Sort the events by date
+    events.sort(key=lambda event: event["event_date"], reverse=True)
+
+    return {"events": events}
