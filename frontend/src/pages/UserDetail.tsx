@@ -16,6 +16,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useUserShotBalances } from "@/api/hooks/useShotBalances";
 import { Helmet } from "react-helmet";
 
+import { getColorClass } from "@/components/ShotBetsDashboard";
+
 // Define types for user-specific data
 
 type Bet = {
@@ -187,13 +189,9 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
                       <TableCell>{formatDate(bet.date_created)}</TableCell>
                       <TableCell>
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            bet.outcome === "incomplete"
-                              ? "bg-yellow-200 text-orange-900"
-                              : bet.outcome
-                                ? "bg-green-100 text-green-800"
-                                : "bg-yellow-100 text-yellow-800"
-                          }`}
+                          className={`px-2 py-1 rounded-full text-xs font-semibold ${getColorClass(
+                            bet.outcome,
+                          )}`}
                         >
                           {bet.outcome === "incomplete"
                             ? "Incomplete"
@@ -258,13 +256,9 @@ const UserShotBetsDashboard: React.FC<UserDashboardProps> = () => {
                       <TableCell>{formatDate(bet.date_created)}</TableCell>
                       <TableCell>
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            bet.outcome === "incomplete"
-                              ? "bg-yellow-200 text-orange-900"
-                              : bet.outcome
-                                ? "bg-green-100 text-green-800"
-                                : "bg-yellow-100 text-yellow-800"
-                          }`}
+                          className={`px-2 py-1 rounded-full text-xs font-semibold ${getColorClass(
+                            bet.outcome,
+                          )}`}
                         >
                           {bet.outcome === "incomplete"
                             ? "Incomplete"

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Helmet } from "react-helmet";
 import { ScrollText } from "lucide-react";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Rules: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("");

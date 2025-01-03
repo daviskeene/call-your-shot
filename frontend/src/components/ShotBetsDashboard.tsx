@@ -53,6 +53,17 @@ export type ShotBetsDashboardProps = {
   data: DashboardData | undefined;
 };
 
+export const getColorClass = (outcome: string | boolean | null) => {
+  if (outcome === "incomplete") {
+    return "bg-yellow-200 text-orange-900";
+  } else if (outcome === "expired") {
+    return "bg-red-200 text-red-900";
+  } else if (!!outcome) {
+    return "bg-green-100 text-green-800";
+  }
+  return "";
+};
+
 // New StatCard component for consistent card styling
 const StatCard: React.FC<{
   title: string;
@@ -105,24 +116,30 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
   }, [nodes]);
 
   const topOwer = useMemo(() => {
-    return leaderboard.reduce((max, entry) =>
-      entry.totalShotsOwed > max.totalShotsOwed ? entry : max,
+    return leaderboard.reduce(
+      (max, entry) => (entry.totalShotsOwed > max.totalShotsOwed ? entry : max),
+      {} as any,
     );
   }, [leaderboard]);
 
   const topOwed = useMemo(() => {
-    return leaderboard.reduce((max, entry) =>
-      entry.totalShotsOwedTo > max.totalShotsOwedTo ? entry : max,
+    return leaderboard.reduce(
+      (max, entry) =>
+        entry.totalShotsOwedTo > max.totalShotsOwedTo ? entry : max,
+      {} as any,
     );
   }, [leaderboard]);
 
-  const oldestShot = useMemo(() => {
+  const oldestShot: Edge | undefined = useMemo(() => {
     return activeEdges
       .filter((edge) => !edge.outcome)
-      .reduce((oldest, current) =>
-        new Date(current.dateCreated) < new Date(oldest.dateCreated)
-          ? current
-          : oldest,
+      .reduce(
+        (oldest, current) =>
+          !oldest ||
+          new Date(current.dateCreated) < new Date(oldest.dateCreated)
+            ? current
+            : oldest,
+        activeEdges[0],
       );
   }, [edges]);
 
@@ -138,7 +155,9 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
       id: node.id,
       name: node.name,
       distinct: new Set(
-        edges.filter((edge) => edge.from === node.id).map((edge) => edge.to),
+        edges
+          .filter((edge) => edge.from === node.id && !edge.outcome)
+          .map((edge) => edge.to),
       ).size,
     }));
     return distinctBets.reduce(
@@ -174,34 +193,50 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <StatCard
           title="Most Shots To Call"
-          value={topOwer.name}
-          subValue={`${topOwer.totalShotsOwed} shots`}
+          value={topOwer.name || "Nobody... yet!"}
+          subValue={`${
+            topOwer.totalShotsOwed || "No outstanding "
+          } shots in ${new Date().getFullYear()}`}
           icon={<Trophy className="h-8 w-8 text-indigo-500" />}
-          trend={`${((topOwer.totalShotsOwed / totalShots) * 100).toFixed(
+          trend={`${((topOwer.totalShotsOwed / totalShots) * 100 || 0).toFixed(
             1,
           )}% of all bets`}
         />
         <StatCard
           title="Most Shots To Take"
-          value={topOwed.name}
-          subValue={`${topOwed.totalShotsOwedTo} shots`}
+          value={topOwed.name || "Nobody... yet!"}
+          subValue={`${
+            topOwed.totalShotsOwedTo || "No outstanding "
+          } shots in ${new Date().getFullYear()}`}
           icon={<Users className="h-8 w-8 text-indigo-500" />}
-          trend={`${((topOwed.totalShotsOwedTo / totalShots) * 100).toFixed(
-            1,
-          )}% of all bets`}
+          trend={`${(
+            (topOwed.totalShotsOwedTo / totalShots) * 100 || 0
+          ).toFixed(1)}% of all bets`}
         />
         <StatCard
           title="Oldest Outstanding Shot"
-          value={`${oldestShot.value} shot(s) on ${nodeMap[oldestShot.to]}`}
-          subValue={oldestShot.reason}
+          value={
+            oldestShot
+              ? `${oldestShot.value} shot(s) on ${nodeMap[oldestShot.to]}`
+              : "No outstanding shots"
+          }
+          subValue={
+            oldestShot
+              ? oldestShot.reason
+              : "Oldest active bet will appear here"
+          }
           icon={<Clock className="h-8 w-8 text-indigo-500" />}
-          trend={formatDistanceToNow(new Date(oldestShot.dateCreated), {
-            addSuffix: true,
-          })}
+          trend={
+            oldestShot
+              ? formatDistanceToNow(new Date(oldestShot.dateCreated), {
+                  addSuffix: true,
+                })
+              : "0"
+          }
         />
         <StatCard
           title="Most Diverse Bettor"
-          value={mostDistinctBets.name}
+          value={mostDistinctBets.name || "Nobody... yet!"}
           subValue={`Bets with ${mostDistinctBets.distinct} different people`}
           icon={<Network className="h-8 w-8 text-indigo-500" />}
           trend={`${(
@@ -217,7 +252,7 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
           value={`${totalShots} shots`}
           subValue={`Across ${activeEdges.length} active bets`}
           icon={<TrendingUp className="h-8 w-8 text-indigo-500" />}
-          trend={`${(totalShots / activeEdges.length).toFixed(
+          trend={`${(totalShots / activeEdges.length || 0).toFixed(
             1,
           )} shots per bet on average`}
         />
@@ -226,7 +261,9 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
           value={`${edges.length}`}
           subValue={`Between ${nodes.length} people`}
           icon={<Users className="h-8 w-8 text-indigo-500" />}
-          trend={`${edges.length - activeEdges.length} total resolved bets`}
+          trend={`${
+            edges.length - activeEdges.length
+          } total resolved bets since 2024`}
         />
       </div>
 
@@ -278,13 +315,9 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({ data }) => {
                     <TableCell>{formatDate(edge.dateCreated)}</TableCell>
                     <TableCell>
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                          edge.outcome === "incomplete"
-                            ? "bg-yellow-200 text-orange-900"
-                            : edge.outcome
-                              ? "bg-green-100 text-green-800"
-                              : "bg-yellow-100 text-yellow-800"
-                        }`}
+                        className={`px-2 py-1 rounded-full text-xs font-semibold ${getColorClass(
+                          edge.outcome,
+                        )}`}
                       >
                         {edge.outcome === "incomplete"
                           ? "Incomplete"

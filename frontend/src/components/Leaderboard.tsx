@@ -37,13 +37,15 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
           (edge) =>
             edge.from === entry.id &&
             !!edge.outcome &&
-            edge.outcome !== "incomplete",
+            edge.outcome !== "incomplete" &&
+            edge.outcome !== "expired",
         ).length;
         const betsLost = userEdges.filter(
           (edge) =>
             edge.to === entry.id &&
             !!edge.outcome &&
-            edge.outcome !== "incomplete",
+            edge.outcome !== "incomplete" &&
+            edge.outcome !== "expired",
         ).length;
 
         return {
@@ -85,10 +87,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
                   Net Shots
                 </TableHead>
                 <TableHead className="font-bold text-gray-800">
-                  Bets Called
+                  Bets Called (since 2024)
                 </TableHead>
                 <TableHead className="font-bold text-gray-800">
-                  Bets Taken
+                  Bets Taken (since 2024)
                 </TableHead>
               </TableRow>
             </TableHeader>

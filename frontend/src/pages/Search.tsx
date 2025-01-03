@@ -1,11 +1,13 @@
 import React, { useState, useMemo } from "react";
+import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
+
+import { Users, Search } from "lucide-react";
+
 import { useUsers } from "@/api/hooks/useUsers";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Users, Search } from "lucide-react";
 import ShotBetsLoading from "@/components/ui/ShotBetLoading";
-import { Helmet } from "react-helmet";
 
 const SearchPage: React.FC = () => {
   const navigate = useNavigate();

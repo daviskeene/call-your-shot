@@ -1,12 +1,13 @@
 import React from "react";
-import { useShotBalances } from "../api/hooks/useShotBalances";
-import LeaderboardComponent from "@/components/Leaderboard";
-import ShotBetsLoading from "@/components/ui/ShotBetLoading";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import { Book } from "lucide-react";
+
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
+import { useShotBalances } from "@/api/hooks/useShotBalances";
+import LeaderboardComponent from "@/components/Leaderboard";
+import ShotBetsLoading from "@/components/ui/ShotBetLoading";
 
 const Leaderboard: React.FC = () => {
   const query = useShotBalances();

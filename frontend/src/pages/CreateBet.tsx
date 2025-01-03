@@ -1,6 +1,7 @@
 import React from "react";
-import BetForm from "../components/BetForm";
 import { Helmet } from "react-helmet";
+
+import BetForm from "../components/BetForm";
 
 const CreateBet: React.FC = () => {
   return (

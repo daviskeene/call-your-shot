@@ -1,11 +1,10 @@
 import React from "react";
-import { useShotBalances } from "../api/hooks/useShotBalances";
+import { Helmet } from "react-helmet";
 
+import { useShotBalances } from "@/api/hooks/useShotBalances";
 import ShotBetsDashboard from "@/components/ShotBetsDashboard";
 import ShotBetsLoading from "@/components/ui/ShotBetLoading";
 import ShotBetsError from "@/components/ui/ShotBetError";
-
-import { Helmet } from "react-helmet";
 
 const Dashboard: React.FC = () => {
   const query = useShotBalances();

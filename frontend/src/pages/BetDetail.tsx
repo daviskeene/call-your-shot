@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
+import { Users, Clock, TrendingUp } from "lucide-react";
+import { format } from "date-fns";
+
 import { useCallShot, useBet } from "@/api/hooks/useBets";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { format } from "date-fns";
-import { Users, Clock, TrendingUp } from "lucide-react";
 import ShotBetsLoading from "@/components/ui/ShotBetLoading";
-import { Helmet } from "react-helmet";
 import ShotBetsError from "@/components/ui/ShotBetError";
 
 const BetDetailPage: React.FC = () => {
@@ -128,8 +130,8 @@ const BetDetailPage: React.FC = () => {
               </h2>
               <p className="text-md text-gray-700">
                 {bet.outcome
-                  ? bet.outcome === "incomplete"
-                    ? "Incomplete"
+                  ? bet.outcome === "incomplete" || bet.outcome === "expired"
+                    ? bet.outcome
                     : `Called on: ${format(
                         new Date(bet.outcome),
                         "MMM d, yyyy, hh:mm a",
@@ -168,13 +170,15 @@ const BetDetailPage: React.FC = () => {
               </div>
             </div>
           )}
-          {bet.outcome && bet.outcome !== "incomplete" && (
-            <div className="text-center mt-4">
-              <p className="text-lg font-bold text-green-600">
-                Shot bet has been completed!
-              </p>
-            </div>
-          )}
+          {bet.outcome &&
+            bet.outcome !== "incomplete" &&
+            bet.outcome !== "expired" && (
+              <div className="text-center mt-4">
+                <p className="text-lg font-bold text-green-600">
+                  Shot bet has been completed!
+                </p>
+              </div>
+            )}
         </CardContent>
       </Card>
     </div>
