@@ -22,7 +22,7 @@ const ShotBetsFeed: React.FC<{ events: EventItem[] | undefined }> = ({
         const isBetCreation = event.type === "bet_creation";
 
         return (
-          <React.Fragment key={event.id}>
+          <React.Fragment key={event.id + event.event_date}>
             {/* A vertical connector line between events */}
             {index !== 0 && (
               <div className="flex flex-col items-center">

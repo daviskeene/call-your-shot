@@ -108,7 +108,6 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({
   const topOwer = useMemo(() => {
     return leaderboard.reduce(
       (max, entry) => (entry.totalShotsOwed > max.totalShotsOwed ? entry : max),
-      {} as any,
     );
   }, [leaderboard]);
 
@@ -116,7 +115,6 @@ const ShotBetsDashboard: React.FC<ShotBetsDashboardProps> = ({
     return leaderboard.reduce(
       (max, entry) =>
         entry.totalShotsOwedTo > max.totalShotsOwedTo ? entry : max,
-      {} as any,
     );
   }, [leaderboard]);
 

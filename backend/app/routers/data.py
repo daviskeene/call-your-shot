@@ -133,9 +133,6 @@ def get_event_log(db: Session = Depends(get_db)):
         if bet.outcome and bet.outcome != "incomplete" and bet.outcome != "expired":
             try:
                 outcome_date = datetime.strptime(bet.outcome[:-4], "%Y-%m-%dT%H:%M")
-                print(bet.outcome)
-                print(outcome_date)
-                print("---")
                 events.append(
                     {
                         "id": bet.id,
